@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Ticket Tracker Application</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md bg-primary navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand">Ticket Tracker Application</a>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" href="../tickets">Tickets</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link active" aria-current="page" th:href="@{/tickets/new}">New Ticket</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="container">
+		<br>
+		<div class="row">
+			<h2>List of Tickets </h2>
+		</div>
+		<div class="card-body">
+			<form th:action="@{/tickets/search}" method="POST">
+				<input type="text" name="searchText" style="width:25%;" placeholder="Enter text to search" />
+				<button type="submit" class="btn btn-primary">
+					Search
+				</button>
+			</form>
+		</div>
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>#</th>
+					<th>Ticket Title</th>
+					<th>Ticket Short Desription</th>
+					<th>Ticket Created on</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ticket: ${tickets}">
+					<td th:text="${ticket.id}"></td>
+					<td th:text="${ticket.title}"></td>
+					<td th:text="${ticket.description}"></td>
+					<td th:text="${ticket.date}"></td>
+					<td>
+						<a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" class="btn btn-primary">
+							Edit
+						</a>
+						<a th:href="@{/tickets/{id}/delete(id=${ticket.id})}" class="btn btn-danger">
+							Delete
+						</a>
+						<a th:href="@{/tickets/{id}(id=${ticket.id})}" class="btn btn-info">
+							View
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
